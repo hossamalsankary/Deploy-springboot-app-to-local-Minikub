@@ -33,8 +33,7 @@ pipeline{
         }
         stage("Dev deployment"){
             steps{
-                echo "========executing A========"
-            }
+                sh ' ./gradlew  check  '            }
 
         }
         stage("Prod deployment"){
