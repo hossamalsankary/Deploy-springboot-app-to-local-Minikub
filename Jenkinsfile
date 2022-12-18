@@ -27,7 +27,7 @@ pipeline{
         }
         stage("Deploy springboot app to local Minikub"){
             steps{
-                sh ' docker build .'
+                sh ' docker build  -t webserver .'
             }
 
         }
