@@ -1,21 +1,47 @@
 pipeline{
     agent any
     stages{
-        stage("A"){
+        stage("Lint stage"){
+            steps{
+                sh ' ./gradlew  check  '
+            }
+
+        }
+        stage("Unit test stage"){
+            steps{
+                sh ' ./gradlew  test  '
+            }
+
+        }
+        stage("SonarQube stage"){
             steps{
                 echo "========executing A========"
             }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
+
+        }
+        stage("Build stage"){
+            steps{
+               sh ' ./gradlew  build  '
             }
+
+        }
+        stage("Deploy springboot app to local Minikub"){
+            steps{
+                echo "========executing A========"
+            }
+
+        }
+        stage("Dev deployment"){
+            steps{
+                echo "========executing A========"
+            }
+
+        }
+        stage("Prod deployment"){
+            steps{
+                echo "========executing A========"
+            }
+
         }
     }
     post{
