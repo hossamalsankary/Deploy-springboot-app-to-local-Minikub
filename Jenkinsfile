@@ -33,7 +33,8 @@ pipeline{
         }
         stage("Dev deployment"){
             steps{
-                sh ' ./gradlew  check  '            }
+                sh ' ./gradlew bootRun ' 
+             }
 
         }
         stage("Prod deployment"){
