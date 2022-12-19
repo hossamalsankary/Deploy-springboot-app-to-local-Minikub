@@ -10,7 +10,7 @@ echo "Dev  exist "
 
 else
 echo  " create namespace Dev deployment "
-kubectl create namespace  Dev
+kubectl create namespace  dev
 
 fi 
 
