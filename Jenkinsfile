@@ -55,7 +55,7 @@ pipeline{
             steps{
             dir("./app"){
 
-                sh 'sed -i 's|TEMP|spring-app$BUILD_NUMBER|g' ./k8s/springBootDeploy.yaml' 
+                sh 'sed -i "s|TEMP|spring-app$BUILD_NUMBER|g" ./k8s/springBootDeploy.yaml' 
 
                 sh ' kubectl apply -f . -n Dev'
             }
@@ -69,7 +69,7 @@ pipeline{
             steps{
             dir("./app"){
 
-                sh 'sed -i 's|TEMP|spring-app$BUILD_NUMBER|g' ./k8s/springBootDeploy.yaml' 
+                sh 'sed -i "s|TEMP|spring-app$BUILD_NUMBER|g"  ./k8s/springBootDeploy.yaml' 
 
                 sh ' kubectl apply -f . -n Prod'
             }
