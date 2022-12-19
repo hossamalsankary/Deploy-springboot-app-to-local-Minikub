@@ -51,7 +51,7 @@ pipeline{
             }
         }
         stage("Dev deployment"){
-            o
+            
             steps{
             dir("./app"){
 
