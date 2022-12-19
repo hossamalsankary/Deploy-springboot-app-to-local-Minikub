@@ -26,20 +26,20 @@ pipeline{
         //     }
 
         // }
-        // stage("Build stage"){
-        //     steps{
-        //   dir("./app"){
+        stage("Build stage"){
+            steps{
+          dir("./app"){
 
-        //        sh ' ./gradlew  build  '
-        //   }
-        //     }
+               sh ' ./gradlew  build  '
+          }
+            }
 
-        // }
+        }
         stage("Deploy springboot app to local Minikub"){
             steps{
                 dir("./app"){
 
-                sh ' docker build  -t spring-app$BUILD_NUMBER .'
+                sh ' docker build  -t spring-app .'
                 }
             }
 
@@ -55,7 +55,7 @@ pipeline{
             steps{
             dir("./app"){
 
-                sh 'sed -i "s|TEMP|spring-app$BUILD_NUMBER|g" ./k8s/springBootDeploy.yaml' 
+                sh 'sed -i "s|TEMP|spring-app|g" ./k8s/springBootDeploy.yaml' 
 
                 sh ' kubectl apply -f . -n Dev'
             }
@@ -69,7 +69,7 @@ pipeline{
             steps{
             dir("./app"){
 
-                sh 'sed -i "s|TEMP|spring-app$BUILD_NUMBER|g"  ./k8s/springBootDeploy.yaml' 
+                sh 'sed -i "s|TEMP|spring-app|g"  ./k8s/springBootDeploy.yaml' 
 
                 sh ' kubectl apply -f . -n Prod'
             }
