@@ -3,8 +3,10 @@ pipeline{
     stages{
         stage("Lint stage"){
             steps{
-
-                sh ' ./app/gradlew  check  '
+                            dir("./app"){
+                                 sh ' ./gradlew  check  
+                            }
+               
             }
 
         }
