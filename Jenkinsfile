@@ -12,7 +12,10 @@ pipeline{
         }
         stage("Unit test stage"){
             steps{
+           dir("./app"){
+
                 sh ' ./gradlew  test  '
+           }
             }
 
         }
