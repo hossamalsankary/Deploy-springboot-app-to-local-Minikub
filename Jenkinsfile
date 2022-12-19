@@ -3,13 +3,14 @@ pipeline{
     stages{
         stage("Lint stage"){
             steps{
-                sh ' ./gradlew  check  '
+
+                sh ' ./app/gradlew  check  '
             }
 
         }
         stage("Unit test stage"){
             steps{
-                sh ' ./gradlew  test  '
+                sh ' ./app/gradlew  test  '
             }
 
         }
@@ -21,13 +22,16 @@ pipeline{
         }
         stage("Build stage"){
             steps{
-               sh ' ./gradlew  build  '
+               sh ' ./app/gradlew  build  '
             }
 
         }
         stage("Deploy springboot app to local Minikub"){
             steps{
+                dir("./app"){
+
                 sh ' docker build  -t webserver .'
+                }
             }
 
         }
