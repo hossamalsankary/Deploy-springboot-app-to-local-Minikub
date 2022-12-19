@@ -4,6 +4,7 @@ pipeline{
         stage("Lint stage"){
             steps{
             dir("./app"){
+                sh 'kubectl get pod'
                     sh ' ./gradlew  check  '
             }
                
