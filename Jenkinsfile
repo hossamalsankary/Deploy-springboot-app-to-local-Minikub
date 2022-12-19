@@ -38,8 +38,8 @@ pipeline{
         stage("Build springboot app Image"){
             steps{
                 dir("./app"){
-                sh 'eval $(minikube docker-env)'
-                sh ' docker build  -t spring-app .'
+              
+                sh ' minikube image build -t  spring-app .'
                 }
             }
 
