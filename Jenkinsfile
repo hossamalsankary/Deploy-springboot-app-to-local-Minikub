@@ -35,7 +35,7 @@ pipeline{
             }
 
         }
-        stage("Deploy springboot app to local Minikub"){
+        stage("Build springboot app Image"){
             steps{
                 dir("./app"){
 

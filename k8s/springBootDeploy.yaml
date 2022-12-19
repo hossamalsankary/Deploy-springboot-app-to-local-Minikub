@@ -15,5 +15,6 @@ spec:
       containers:
       - name: springboot
         image: TEMP
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
