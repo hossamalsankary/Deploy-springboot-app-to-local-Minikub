@@ -3,7 +3,7 @@
 namespaces=$(kubectl get namespaces)
 
 
-if [[ $namespaces = *Dev* ]]
+if [[ $namespaces = *dev* ]]
 then
 
 echo "Dev  exist "
@@ -15,7 +15,7 @@ kubectl create namespace  Dev
 fi 
 
 
-if [[ $namespaces = *Prod* ]]
+if [[ $namespaces = *prod* ]]
 then
 
 echo "Prod exist "
