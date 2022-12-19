@@ -82,22 +82,24 @@ pipeline{
         }
     }
     post{
-        always{
-            
-            cleanWs(cleanWhenNotBuilt: false,
+    
+        success{
+                 cleanWs(cleanWhenNotBuilt: false,
                     deleteDirs: true,
                     disableDeferredWipeout: true,
                     notFailBuild: true,
                     patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
                                [pattern: '.propsfile', type: 'EXCLUDE']])
-        
-        }
-        success{
-            echo "========pipeline executed successfully ========"
         }
         failure{
                   sh ' kubectl delete namespace dev'
                   sh 'docker system prune -f '
+                cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
 
         }
     }
