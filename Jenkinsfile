@@ -55,7 +55,9 @@ pipeline{
             steps{
             dir("./app"){
 
-                sh 'sed -i "s|TEMP|spring-app|g" ./k8s/springBootDeploy.yaml' 
+                sh """
+                sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+                  """ 
 
                 sh ' kubectl apply -f . -n Dev'
             }
