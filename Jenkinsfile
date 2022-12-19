@@ -55,10 +55,10 @@ pipeline{
             steps{
 
             
-            dir("./app"){
+            dir("./k8s"){
 
 
-                sh ' kubectl apply -f . -n Dev'
+                sh ' kubectl apply -f . -n dev'
             }
              }
 
@@ -75,7 +75,7 @@ pipeline{
 
                
 
-                sh ' kubectl apply -f . -n Prod'
+                sh ' kubectl apply -f . -n prod'
             }
             }
 
@@ -97,7 +97,7 @@ pipeline{
         }
         failure{
                   sh ' kubectl delete namespace dev'
-                  sh 'docker system prune '
+                  sh 'docker system prune -f '
 
         }
     }
