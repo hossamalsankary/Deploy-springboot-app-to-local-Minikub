@@ -5,7 +5,7 @@ pipeline{
             steps{
             dir("./app"){
                 sh 'kubectl get pod'
-                    sh ' ./gradlew  check  '
+                sh ' ./gradlew  check '
             }
                
             }
@@ -14,8 +14,7 @@ pipeline{
         stage("Unit test stage"){
             steps{
            dir("./app"){
-
-                sh ' ./gradlew  test  '
+              sh ' ./gradlew  test  '
            }
             }
 
@@ -24,7 +23,6 @@ pipeline{
             steps{
            dir("./app"){
 
-                echo "========executing A========"
            }
             }
 
@@ -42,7 +40,7 @@ pipeline{
             steps{
                 dir("./app"){
 
-                sh ' docker build  -t webserver .'
+                sh ' docker build  -t webserver$BUILD_NUMBER .'
                 }
             }
 
