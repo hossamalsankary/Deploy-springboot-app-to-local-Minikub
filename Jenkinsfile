@@ -40,23 +40,40 @@ pipeline{
             steps{
                 dir("./app"){
 
-                sh ' docker build  -t webserver$BUILD_NUMBER .'
+                sh ' docker build  -t spring-app$BUILD_NUMBER .'
                 }
             }
 
         }
+        stage("Carete Name Spaces"){
+            steps{
+
+                sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
+            }
+        }
         stage("Dev deployment"){
+            o
             steps{
             dir("./app"){
 
-                sh ' ./gradlew bootRun ' 
+                sh 'sed -i 's|TEMP|spring-app$BUILD_NUMBER|g' ./k8s/springBootDeploy.yaml' 
+
+                sh ' kubectl apply -f . -n Dev'
             }
              }
 
         }
         stage("Prod deployment"){
+              when {
+                branch 'Master'
+            }
             steps{
-                echo "========executing A========"
+            dir("./app"){
+
+                sh 'sed -i 's|TEMP|spring-app$BUILD_NUMBER|g' ./k8s/springBootDeploy.yaml' 
+
+                sh ' kubectl apply -f . -n Prod'
+            }
             }
 
         }
