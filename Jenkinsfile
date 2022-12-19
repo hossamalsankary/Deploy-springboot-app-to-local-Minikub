@@ -53,11 +53,10 @@ pipeline{
         stage("Dev deployment"){
             
             steps{
+
+            
             dir("./app"){
 
-                sh """
-                sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-                  """ 
 
                 sh ' kubectl apply -f . -n Dev'
             }
@@ -69,9 +68,12 @@ pipeline{
                 branch 'Master'
             }
             steps{
+            sh """
+             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+            """ 
             dir("./app"){
 
-                sh 'sed -i "s|TEMP|spring-app|g"  ./k8s/springBootDeploy.yaml' 
+               
 
                 sh ' kubectl apply -f . -n Prod'
             }
@@ -81,13 +83,22 @@ pipeline{
     }
     post{
         always{
-            echo "========always========"
+             always {
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
+        }
         }
         success{
             echo "========pipeline executed successfully ========"
         }
         failure{
-            echo "========pipeline execution failed========"
+                  sh ' kubectl delete namespace dev'
+                  sh 'docker system prune '
+
         }
     }
 }
