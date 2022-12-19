@@ -93,7 +93,7 @@ pipeline{
         }
         failure{
                   sh ' kubectl delete namespace dev'
-                  sh 'docker system prune -f '
+                 // sh 'docker system prune -f '
                 cleanWs(cleanWhenNotBuilt: false,
                     deleteDirs: true,
                     disableDeferredWipeout: true,
