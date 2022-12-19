@@ -12,19 +12,25 @@ pipeline{
         }
         stage("Unit test stage"){
             steps{
-                sh ' ./app/gradlew  test  '
+                sh ' ./gradlew  test  '
             }
 
         }
         stage("SonarQube stage"){
             steps{
+           dir("./app"){
+
                 echo "========executing A========"
+           }
             }
 
         }
         stage("Build stage"){
             steps{
-               sh ' ./app/gradlew  build  '
+          dir("./app"){
+
+               sh ' ./gradlew  build  '
+          }
             }
 
         }
@@ -39,7 +45,10 @@ pipeline{
         }
         stage("Dev deployment"){
             steps{
+            dir("./app"){
+
                 sh ' ./gradlew bootRun ' 
+            }
              }
 
         }
