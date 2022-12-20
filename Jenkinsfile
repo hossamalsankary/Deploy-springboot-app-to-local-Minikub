@@ -54,13 +54,13 @@ pipeline{
            agent {
               docker { 
                    image 'gradle'
-                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches  -v $HOME/shear:"${PWD}/app/"'
+                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
                     }
                }
             steps{
                 dir("./app"){
-                sh 'ls $HOME/shear'
-                    // sh ' ./gradlew  build  '
+
+                    sh ' ./gradlew  build  '
                 }
             }
 
@@ -68,10 +68,9 @@ pipeline{
         stage("Build springboot app Image"){
             steps{
                 dir("./app"){
-                    
                 // used gradle image to build onflay
-                // sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
-                // sh ' minikube image build -t  spring-app .'
+                sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
+                sh ' minikube image build -t  spring-app .'
                 }
             }
 
@@ -106,9 +105,6 @@ pipeline{
              sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
             """ 
             dir("./app"){
-
-               
-
                 sh ' kubectl apply -f . -n prod'
             }
             }
