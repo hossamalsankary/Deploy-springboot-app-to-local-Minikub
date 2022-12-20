@@ -52,7 +52,7 @@ pipeline{
                }
             steps{
         
-           sh 'bash ../bash-scripts/sonarsceaaner.sh'
+           sh 'bash ./bash-scripts/sonarsceaaner.sh'
         sh 'sonar-scanner '
         
            dir("./app"){
