@@ -51,6 +51,7 @@ pipeline{
             steps{
            dir("./app"){
            sh """
+           ./gradlew clean build
            ./gradlew sonar \
             -Dsonar.projectKey=test \
             -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
