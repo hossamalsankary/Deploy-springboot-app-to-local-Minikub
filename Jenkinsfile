@@ -154,6 +154,12 @@ pipeline {
       }
 
     }
+
+    stage("Smoke Test"){
+      steps{
+        sh 'curl ${serverIP}'
+      }
+    }
   }
   post {
 
