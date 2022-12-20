@@ -1,11 +1,5 @@
 #!/bin/bash
-
-# download sonar-scaaner
-wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-
-# extract it 
+wget  -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
 unzip sonar-scanner-cli-4.7.0.2747-linux.zip
-
-export PATH=$PATH:"${PWD}/sonar-scanner-4.7.0.2747-linux/bin/"
-
-
+sudo mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
+export PATH="$PATH:/opt/sonar-scanner/bin"
