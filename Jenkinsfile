@@ -51,10 +51,10 @@ pipeline{
             steps{
            dir("./app"){
             sh """
-           ./gradlew sonar \
-                -Dsonar.projectKey=testh \
-                -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
-                -Dsonar.login=sqp_c37dd64840dc8faee18de22d3e4691af1900f0d6
+         ./gradlew sonar \
+            -Dsonar.projectKey=test \
+            -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
+            -Dsonar.login=sqp_898df437dc73d7325a79edfea44e029a37b4c40e
        
                 """
            }
