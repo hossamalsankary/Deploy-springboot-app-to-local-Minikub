@@ -52,10 +52,15 @@ pipeline{
 
            dir("./app"){
 
-              sh 'bash ../bash-scripts/sonarsceaaner.sh'
-              sh 'sonar-scanner --version'
+            
               withSonarQubeEnv(installationName: 'sq1') { 
-                        sh "./gradlew sonar "
+                        sh """
+                        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+                        unzip sonar-scanner-cli-4.7.0.2747-linux.zip
+                        export PATH=$PATH:"${PWD}/sonar-scanner-4.7.0.2747-linux/bin/"
+
+
+                        ./gradlew sonar """
                 }
 
            }
