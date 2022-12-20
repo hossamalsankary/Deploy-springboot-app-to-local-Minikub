@@ -3,10 +3,10 @@ pipeline{
     stages{
         stage("Lint stage"){
               agent {
-                        docker { 
-                            image 'gradle'
-                             args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                             }
+                    docker { 
+                        image 'gradle'
+                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                            }
                     }
             steps{
                 sh 'pwd'
@@ -19,6 +19,12 @@ pipeline{
 
         }
         stage("Unit test stage"){
+     agent {
+                    docker { 
+                        image 'gradle'
+                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                            }
+                    }
             steps{
            dir("./app"){
               sh ' ./gradlew  test  '
@@ -27,6 +33,7 @@ pipeline{
 
         }
         stage("SonarQube stage"){
+    
             steps{
            dir("./app"){
 
@@ -35,61 +42,67 @@ pipeline{
 
         }
         stage("Build stage"){
-            steps{
-          dir("./app"){
-
-               sh ' ./gradlew  build  '
-          }
-            }
-
-        }
-        stage("Build springboot app Image"){
+           agent {
+              docker { 
+                   image 'gradle'
+                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                    }
+               }
             steps{
                 dir("./app"){
-              
-                sh ' minikube image build -t  spring-app .'
+
+                    sh ' ./gradlew  build  '
                 }
             }
 
         }
-        stage("Carete Name Spaces"){
-            steps{
+        // stage("Build springboot app Image"){
+        //     steps{
+        //         dir("./app"){
+              
+        //         sh ' minikube image build -t  spring-app .'
+        //         }
+        //     }
 
-                sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
-            }
-        }
-        stage("Dev deployment"){
+        // }
+        // stage("Carete Name Spaces"){
+        //     steps{
+
+        //         sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
+        //     }
+        // }
+        // stage("Dev deployment"){
             
-            steps{
+        //     steps{
 
-             sh """
-             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-            """ 
-            dir("./k8s"){
+        //      sh """
+        //      sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+        //     """ 
+        //     dir("./k8s"){
 
 
-                sh ' kubectl apply -f . -n dev'
-            }
-             }
+        //         sh ' kubectl apply -f . -n dev'
+        //     }
+        //      }
 
-        }
-        stage("Prod deployment"){
-              when {
-                branch 'Master'
-            }
-            steps{
-            sh """
-             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-            """ 
-            dir("./app"){
+        // }
+        // stage("Prod deployment"){
+        //       when {
+        //         branch 'Master'
+        //     }
+        //     steps{
+        //     sh """
+        //      sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+        //     """ 
+        //     dir("./app"){
 
                
 
-                sh ' kubectl apply -f . -n prod'
-            }
-            }
+        //         sh ' kubectl apply -f . -n prod'
+        //     }
+        //     }
 
-        }
+        // }
     }
     post{
     
