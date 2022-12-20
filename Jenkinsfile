@@ -49,7 +49,7 @@ pipeline{
         
            dir("./app"){
 
-             withSonarQubeEnv('sq1') { 
+             
              
               sh """ 
              ./gradlew sonar \
@@ -57,7 +57,7 @@ pipeline{
             -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
             -Dsonar.login=sqp_413051d5beff2f689d7f49702e0c66cb0fbd13eb
                             """    
-                }
+                
 
            }
             }
