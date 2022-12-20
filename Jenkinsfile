@@ -52,7 +52,7 @@ pipeline{
 
            dir("./app"){
 
-              sh 'bash ./bash-scripts/sonarsceaaner.sh'
+              sh 'bash ../bash-scripts/sonarsceaaner.sh'
 
 
               withSonarQubeEnv(installationName: 'sq1') { 
