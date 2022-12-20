@@ -51,6 +51,8 @@ pipeline{
             steps{
                 sh 'wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip'
                 sh 'unzip sonar-scanner-cli-4.7.0.2747-linux.zip'
+                sh 'export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/'
+                sh 'sonar-scanner'
            dir("./app"){
 
             
@@ -69,66 +71,66 @@ pipeline{
             }
 
         }
-        stage("Build stage"){
-           agent {
-              docker { 
-                   image 'gradle'
-                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                    }
-               }
-            steps{
-                dir("./app"){
+        // stage("Build stage"){
+        //    agent {
+        //       docker { 
+        //            image 'gradle'
+        //             args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+        //             }
+        //        }
+        //     steps{
+        //         dir("./app"){
 
-                    sh ' ./gradlew  build  '
-                }
-            }
+        //             sh ' ./gradlew  build  '
+        //         }
+        //     }
 
-        }
-        stage("Build springboot app Image"){
-            steps{
-                dir("./app"){
-                // used gradle image to build onflay
-                sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
-                sh ' minikube image build -t  spring-app .'
-                }
-            }
+        // }
+        // stage("Build springboot app Image"){
+        //     steps{
+        //         dir("./app"){
+        //         // used gradle image to build onflay
+        //         sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
+        //         sh ' minikube image build -t  spring-app .'
+        //         }
+        //     }
 
-        }
-        stage("Carete Name Spaces"){
-            steps{
+        // }
+        // stage("Carete Name Spaces"){
+        //     steps{
 
-                sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
-            }
-        }
-        stage("Dev deployment"){
+        //         sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
+        //     }
+        // }
+        // stage("Dev deployment"){
             
-            steps{
+        //     steps{
 
-             sh """
-             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-            """ 
-            dir("./k8s"){
+        //      sh """
+        //      sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+        //     """ 
+        //     dir("./k8s"){
 
 
-                sh ' kubectl apply -f . -n dev'
-            }
-             }
+        //         sh ' kubectl apply -f . -n dev'
+        //     }
+        //      }
 
-        }
-        stage("Prod deployment"){
-              when {
-                branch 'Master'
-            }
-            steps{
-            sh """
-             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-            """ 
-            dir("./app"){
-                sh ' kubectl apply -f . -n prod'
-            }
-            }
+        // }
+        // stage("Prod deployment"){
+        //       when {
+        //         branch 'Master'
+        //     }
+        //     steps{
+        //     sh """
+        //      sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+        //     """ 
+        //     dir("./app"){
+        //         sh ' kubectl apply -f . -n prod'
+        //     }
+        //     }
 
-        }
+        // }
     }
     post{
     
