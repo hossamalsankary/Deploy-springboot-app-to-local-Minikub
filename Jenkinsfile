@@ -7,7 +7,7 @@ pipeline{
                 sh "whoami"
                 sh "ls ~/"
                 sh  "ls /home"
-                
+
             }
         }
         stage("Lint stage"){
@@ -65,53 +65,54 @@ pipeline{
             }
 
         }
-        // stage("Build springboot app Image"){
-        //     steps{
-        //         dir("./app"){
-              
-        //         sh ' minikube image build -t  spring-app .'
-        //         }
-        //     }
+        stage("Build springboot app Image"){
+            steps{
+                dir("./app"){
+                // used gradle image to build onflay
+                sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
+                sh ' minikube image build -t  spring-app .'
+                }
+            }
 
-        // }
-        // stage("Carete Name Spaces"){
-        //     steps{
+        }
+        stage("Carete Name Spaces"){
+            steps{
 
-        //         sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
-        //     }
-        // }
-        // stage("Dev deployment"){
+                sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
+            }
+        }
+        stage("Dev deployment"){
             
-        //     steps{
+            steps{
 
-        //      sh """
-        //      sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-        //     """ 
-        //     dir("./k8s"){
+             sh """
+             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+            """ 
+            dir("./k8s"){
 
 
-        //         sh ' kubectl apply -f . -n dev'
-        //     }
-        //      }
+                sh ' kubectl apply -f . -n dev'
+            }
+             }
 
-        // }
-        // stage("Prod deployment"){
-        //       when {
-        //         branch 'Master'
-        //     }
-        //     steps{
-        //     sh """
-        //      sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-        //     """ 
-        //     dir("./app"){
+        }
+        stage("Prod deployment"){
+              when {
+                branch 'Master'
+            }
+            steps{
+            sh """
+             sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+            """ 
+            dir("./app"){
 
                
 
-        //         sh ' kubectl apply -f . -n prod'
-        //     }
-        //     }
+                sh ' kubectl apply -f . -n prod'
+            }
+            }
 
-        // }
+        }
     }
     post{
     
