@@ -44,16 +44,21 @@ pipeline{
         stage("SonarQube stage"){
          agent {
               docker { 
-                   image 'sonarsource/sonar-scanner-cli'
+                   image 'gradle'
                     args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
                     }
                }
             steps{
+
            dir("./app"){
-   
+
+              sh 'bash ./bash-scripts/sonarsceaaner.sh'
+
+
               withSonarQubeEnv(installationName: 'sq1') { 
                         sh "./gradlew sonar --info "
                 }
+
            }
             }
 
