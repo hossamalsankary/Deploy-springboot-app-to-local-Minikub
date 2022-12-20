@@ -99,11 +99,11 @@ pipeline{
         stage("Smake Test for dev env"){
      
             steps{
-                sh """
-                SERVIR_IP=$(minikube service spring-service --url -n dev)
-                curl $SERVIR_IP
+                // sh """
+                // SERVIR_IP=$(minikube service spring-service --url -n dev)
+                // curl $SERVIR_IP
 
-                """
+                // """
             }
         }
         stage("Prod deployment"){
