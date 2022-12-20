@@ -49,7 +49,7 @@ pipeline{
         
            dir("./app"){
 
-             withSonarQubeEnv() { 
+             withSonarQubeEnv('sq1') { 
              
               sh """ 
                ./gradlew sonar 
