@@ -52,7 +52,9 @@ pipeline{
              withSonarQubeEnv('sq1') { 
              
               sh """ 
-               ./gradlew sonar 
+               ./gradlew sonar \
+                -Dsonar.projectKey=hoss \
+                -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
                 """    
                 }
 
