@@ -1,3 +1,4 @@
+def serverIP = '0000'
 pipeline {
   agent any
 
@@ -10,6 +11,7 @@ pipeline {
                     args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
                     }
             }
+            
         steps{
 
         dir("./app"){
@@ -102,11 +104,23 @@ pipeline {
         dir("./k8s") {
           sh ' kubectl apply -f . -n dev'
         }
-        
+        sh ' minikube service  spring-service  -n dev --url > tump.txt'
+        script {
+          serverIP = readFile('tump.txt').trim()
+        }
       }
       post{
+         success{
+
+          sh ' minikube service  spring-service  -n prod --url > tump.txt'
+            script {
+
+              serverIP = readFile('tump.txt').trim()
+
+            }
+          }
           failure{
-             sh ' kubectl rollout undo deployment/spring-deploy '
+             sh ' kubectl rollout undo deployment/spring-deploy  -n dev'
           }
       }
       
@@ -124,12 +138,18 @@ pipeline {
         dir("./app") {
           sh ' kubectl apply -f . -n prod'
         }
+     
       }
       post{
          
-       
+         success{
+          sh ' minikube service  spring-service  -n prod --url > tump.txt'
+            script {
+              serverIP = readFile('tump.txt').trim()
+            }
+          }
           failure{
-             sh ' kubectl rollout undo deployment/spring-deploy '
+             sh ' kubectl rollout undo deployment/spring-deploy -n prod '
           }
       }
 
