@@ -42,12 +42,12 @@ pipeline{
 
     //     }
         stage("SonarQube stage"){
-         agent {
-              docker { 
-                   image 'gradle'
-                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                    }
-               }
+        //  agent {
+        //       docker { 
+        //            image 'gradle'
+        //             args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+        //             }
+        //        }
             steps{
            dir("./app"){
 
