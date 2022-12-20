@@ -53,10 +53,9 @@ pipeline{
            dir("./app"){
 
               sh 'bash ../bash-scripts/sonarsceaaner.sh'
-
-
+              sh 'sonar-scanner --version'
               withSonarQubeEnv(installationName: 'sq1') { 
-                        sh "./gradlew sonar --info "
+                        sh "./gradlew sonar "
                 }
 
            }

@@ -8,3 +8,4 @@ unzip sonar-scanner-cli-4.7.0.2747-linux.zip
 
 export PATH=$PATH:"${PWD}/sonar-scanner-4.7.0.2747-linux/bin/"
 
+
