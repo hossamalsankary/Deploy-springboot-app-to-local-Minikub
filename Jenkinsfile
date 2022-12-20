@@ -49,16 +49,11 @@ pipeline{
         
            dir("./app"){
 
-            //   withSonarQubeEnv(installationName: 'sq1') { 
+             withSonarQubeEnv(installationName: 'sq1') { 
              
-            //         //     sh """
-                        
-            //         //     export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/
-                        
-            //         //    echo $PATH
-            //         //      """
-            //            // ./gradlew sonar
-            //     }
+           
+                     h '   ./gradlew sonar '
+                }
 
            }
             }
