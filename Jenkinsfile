@@ -52,18 +52,9 @@ pipeline{
            dir("./app"){
 
 
-     
-                //     withSonarQubeEnv(installationName: 'sq1') { 
-                //           sh """  gradle sonar   -Dsonar.projectKey=test '
-                //            """
-                // }
-            sh """
-
-             ./gradlew sonar \
-            -Dsonar.projectKey=test \
-            -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
-            -Dsonar.login=sqp_898df437dc73d7325a79edfea44e029a37b4c40e
-                """
+              withSonarQubeEnv(installationName: 'sq1') { 
+                        sh "./gradlew sonar"
+                }
            }
             }
 
