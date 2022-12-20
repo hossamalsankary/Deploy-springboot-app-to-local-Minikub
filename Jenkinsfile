@@ -49,21 +49,21 @@ pipeline{
                     }
                }
             steps{
-
+                sh 'wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip'
+                sh 'unzip sonar-scanner-cli-4.7.0.2747-linux.zip'
            dir("./app"){
 
             
-              withSonarQubeEnv(installationName: 'sq1') { 
-                sh 'wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip'
-                sh 'unzip sonar-scanner-cli-4.7.0.2747-linux.zip'
-                    //     sh """
+            //   withSonarQubeEnv(installationName: 'sq1') { 
+             
+            //         //     sh """
                         
-                    //     export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/
+            //         //     export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/
                         
-                    //    echo $PATH
-                    //      """
-                       // ./gradlew sonar
-                }
+            //         //    echo $PATH
+            //         //      """
+            //            // ./gradlew sonar
+            //     }
 
            }
             }
