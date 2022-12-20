@@ -49,25 +49,22 @@ pipeline{
         
            dir("./app"){
 
-             withSonarQubeEnv('sq1') { 
+             withSonarQubeEnv("sonar-scan-server") {
+                  sh "./gradlew sonar"
+                 }
              
-              sh """ 
-                ./gradlew tasks
-             
-                """    
-                }
+            //   sh """ 
+            //    ./gradlew sonarqube \
+            //     -Dsonar.projectKey=damo \
+            //     -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
+            //     -Dsonar.login=sqp_4b0ff6743dacc98c552b28085ccb37433cc3cbb2
+            //     """    
+                
 
            }
             }
 
         }
-    stage("Quality Gate") {
-      steps {
-        timeout(time: 2, unit: 'MINUTES') {
-          waitForQualityGate abortPipeline: true
-        }
-      }
-    }
         // stage("Build stage"){
         //    agent {
         //       docker { 

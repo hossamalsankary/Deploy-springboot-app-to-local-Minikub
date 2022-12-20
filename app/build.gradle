@@ -11,8 +11,7 @@ plugins {
 sonar {
   properties {
 	  
-  property "sonar.coverage.jacoco.xmlReportPaths", "path.xml"
-  }
+    property "sonar.projectKey", "damo2"  }
 }
 
 
