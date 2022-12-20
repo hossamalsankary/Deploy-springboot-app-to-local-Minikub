@@ -2,59 +2,59 @@ pipeline{
     agent any
 
     stages{
-        stage("shoow"){
-            steps{
-                sh "whoami"
-                sh "ls ~/"
-                sh  "ls /home"
+    //     stage("shoow"){
+    //         steps{
+    //             sh "whoami"
+    //             sh "ls ~/"
+    //             sh  "ls /home"
 
-            }
-        }
-        stage("Lint stage"){
-              agent {
-                    docker { 
-                        image 'gradle'
-                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                            }
-                    }
-            steps{
-                sh 'pwd'
+    //         }
+    //     }
+    //     stage("Lint stage"){
+    //           agent {
+    //                 docker { 
+    //                     image 'gradle'
+    //                         args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+    //                         }
+    //                 }
+    //         steps{
+    //             sh 'pwd'
                 
-            dir("./app"){
-                sh ' ./gradlew  check '
-            }
+    //         dir("./app"){
+    //             sh ' ./gradlew  check '
+    //         }
                
-            }
+    //         }
 
-        }
-        stage("Unit test stage"){
-     agent {
-                    docker { 
-                        image 'gradle'
-                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                            }
-                    }
-            steps{
-           dir("./app"){
-              sh ' ./gradlew  test  '
-           }
-            }
+    //     }
+    //     stage("Unit test stage"){
+    //  agent {
+    //                 docker { 
+    //                     image 'gradle'
+    //                         args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+    //                         }
+    //                 }
+    //         steps{
+    //        dir("./app"){
+    //           sh ' ./gradlew  test  '
+    //        }
+    //         }
 
-        }
-        stage("SonarQube stage"){
+    //     }
+    //     stage("SonarQube stage"){
     
-            steps{
-           dir("./app"){
+    //         steps{
+    //        dir("./app"){
 
-           }
-            }
+    //        }
+    //         }
 
-        }
+    //     }
         stage("Build stage"){
            agent {
               docker { 
                    image 'gradle'
-                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches -v $HOME/shear:/var/lib/jenkins/workspace/java_app_main@2/app/'
                     }
                }
             steps{
@@ -68,9 +68,10 @@ pipeline{
         stage("Build springboot app Image"){
             steps{
                 dir("./app"){
+             sh ' ls $HOME/shear'
                 // used gradle image to build onflay
-                sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
-                sh ' minikube image build -t  spring-app .'
+                // sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
+                // sh ' minikube image build -t  spring-app .'
                 }
             }
 
