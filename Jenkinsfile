@@ -46,7 +46,7 @@ pipeline{
             steps{
            dir("./app"){
             sh """
-       docker run  -p 9000:9000 -v "${PWD}":/home/gradle  gradle ./gradlew sonar \
+       docker run  -v "${PWD}":/home/gradle  gradle ./gradlew sonar \
                 -Dsonar.projectKey=testh \
                 -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
                 -Dsonar.login=sqp_c37dd64840dc8faee18de22d3e4691af1900f0d6
