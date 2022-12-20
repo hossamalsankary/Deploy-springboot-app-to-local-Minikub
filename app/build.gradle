@@ -10,7 +10,7 @@ plugins {
 
 sonar {
   properties {
-    property "sonar.projectKey", "hoss"
+    property "sonar.projectKey", "hos32s"
   }
 }
 
