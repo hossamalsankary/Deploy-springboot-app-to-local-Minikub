@@ -138,18 +138,18 @@ pipeline{
 
         // }
     }
-    post{
+    // post{
     
     
-        failure{
-                 // sh 'docker system prune -f '
-                cleanWs(cleanWhenNotBuilt: false,
-                    deleteDirs: true,
-                    disableDeferredWipeout: true,
-                    notFailBuild: true,
-                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                               [pattern: '.propsfile', type: 'EXCLUDE']])
+    //     failure{
+    //              // sh 'docker system prune -f '
+    //             cleanWs(cleanWhenNotBuilt: false,
+    //                 deleteDirs: true,
+    //                 disableDeferredWipeout: true,
+    //                 notFailBuild: true,
+    //                 patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+    //                            [pattern: '.propsfile', type: 'EXCLUDE']])
 
-        }
-    }
+    //     }
+    // }
 }
