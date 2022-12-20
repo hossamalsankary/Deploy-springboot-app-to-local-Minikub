@@ -137,7 +137,7 @@ pipeline{
     
     
         failure{
-                 docker system prune --volumes   --force  --all 
+                sh 'docker system prune --volumes   --force  --all '
                 cleanWs(cleanWhenNotBuilt: false,
                     deleteDirs: true,
                     disableDeferredWipeout: true,
