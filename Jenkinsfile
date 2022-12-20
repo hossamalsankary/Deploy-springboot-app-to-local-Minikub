@@ -147,7 +147,6 @@ pipeline{
                                [pattern: '.propsfile', type: 'EXCLUDE']])
         }
         failure{
-                  sh ' kubectl delete namespace dev'
                  // sh 'docker system prune -f '
                 cleanWs(cleanWhenNotBuilt: false,
                     deleteDirs: true,
