@@ -52,7 +52,9 @@ pipeline{
              withSonarQubeEnv(installationName: 'sq1') { 
              
            
-                     h '   ./gradlew sonar '
+              sh '   ./gradlew sonar   -Dsonar.projectKey=damo \
+                        -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
+                        
                 }
 
            }
