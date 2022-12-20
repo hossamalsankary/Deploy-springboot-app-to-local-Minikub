@@ -42,34 +42,28 @@ pipeline{
 
     //     }
         stage("SonarQube stage"){
-        //  agent {
-        //       docker { 
-        //            image 'gradle'
-        //             args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-        //             }
-        //        }
+         agent {
+              docker { 
+                   image 'gradle'
+                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                    }
+               }
             steps{
            dir("./app"){
 
-            sh """
-                docker run \
-                       --rm \
-                       -e SONAR_HOST_URL="http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000" \
-                       -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${PWD}"
-                       -e SONAR_LOGIN="sqp_898df437dc73d7325a79edfea44e029a37b4c40e" \
-                       -v "${PWD}:/src" sonarsource/sonar-scanner-cli
-            """
+
+     
                 //     withSonarQubeEnv(installationName: 'sq1') { 
                 //           sh """  gradle sonar   -Dsonar.projectKey=test '
                 //            """
                 // }
-        //     sh """
-        //  ./gradlew sonar \
-        //     -Dsonar.projectKey=test \
-        //     -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
-        //     -Dsonar.login=sqp_898df437dc73d7325a79edfea44e029a37b4c40e
-       
-        //         """
+            sh """
+
+             ./gradlew sonar \
+            -Dsonar.projectKey=test \
+            -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
+            -Dsonar.login=sqp_898df437dc73d7325a79edfea44e029a37b4c40e
+                """
            }
             }
 
