@@ -52,21 +52,22 @@ pipeline{
              withSonarQubeEnv('sq1') { 
              
               sh """ 
-                 ls
+               ./gradlew sonar 
+             
                 """    
                 }
-           }
 
            }
             }
 
         }
     stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'MINUTES') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
+      steps {
+        timeout(time: 2, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
         // stage("Build stage"){
         //    agent {
         //       docker { 
