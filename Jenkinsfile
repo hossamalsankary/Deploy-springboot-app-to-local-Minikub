@@ -2,50 +2,55 @@ pipeline{
     agent any
 
     stages{
-        stage("shoow"){
-            steps{
-                sh "whoami"
-                sh "ls ~/"
-                sh  "ls /home"
+    //     stage("shoow"){
+    //         steps{
+    //             sh "whoami"
+    //             sh "ls ~/"
+    //             sh  "ls /home"
 
-            }
-        }
-        stage("Lint stage"){
-              agent {
-                    docker { 
-                        image 'gradle'
-                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                            }
-                    }
-            steps{
-                sh 'pwd'
+    //         }
+    //     }
+    //     stage("Lint stage"){
+    //           agent {
+    //                 docker { 
+    //                     image 'gradle'
+    //                         args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+    //                         }
+    //                 }
+    //         steps{
+    //             sh 'pwd'
                 
-            dir("./app"){
-                sh ' ./gradlew  check '
-            }
+    //         dir("./app"){
+    //             sh ' ./gradlew  check '
+    //         }
                
-            }
+    //         }
 
-        }
-        stage("Unit test stage"){
-     agent {
-                    docker { 
-                        image 'gradle'
-                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-                            }
-                    }
-            steps{
-           dir("./app"){
-              sh ' ./gradlew  test  '
-           }
-            }
+    //     }
+    //     stage("Unit test stage"){
+    //  agent {
+    //                 docker { 
+    //                     image 'gradle'
+    //                         args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+    //                         }
+    //                 }
+    //         steps{
+    //        dir("./app"){
+    //           sh ' ./gradlew  test  '
+    //        }
+    //         }
 
-        }
+    //     }
         stage("SonarQube stage"){
     
             steps{
            dir("./app"){
-
+            sh """
+            ./gradlew sonar \
+            -Dsonar.projectKey=testh \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.login=sqp_c37dd64840dc8faee18de22d3e4691af1900f0d6
+                        """
            }
             }
 
