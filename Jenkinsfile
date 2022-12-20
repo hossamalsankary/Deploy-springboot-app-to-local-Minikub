@@ -49,10 +49,10 @@ pipeline{
         
            dir("./app"){
 
-             withSonarQubeEnv(installationName: 'sq1') { 
+             withSonarQubeEnv('sq1') { 
              
-           
-              sh """  ./gradlew sonar   -Dsonar.projectKey=damo 
+              sh """ 
+               ./gradlew sonar   
                 """    
                 }
 
