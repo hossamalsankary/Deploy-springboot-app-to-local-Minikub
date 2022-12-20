@@ -86,7 +86,7 @@ pipeline{
             
             steps{
 
-             sh """ sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml """ 
+            //  sh """ sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml """ 
             dir("./k8s"){
 
 
