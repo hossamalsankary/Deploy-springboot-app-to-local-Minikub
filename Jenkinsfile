@@ -27,20 +27,20 @@ pipeline{
     //         }
 
     //     }
-    //     stage("Unit test stage"){
-    //  agent {
-    //                 docker { 
-    //                     image 'gradle'
-    //                         args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-    //                         }
-    //                 }
-    //         steps{
-    //        dir("./app"){
-    //           sh ' ./gradlew  test  '
-    //        }
-    //         }
+        stage("Unit test stage"){
+     agent {
+                    docker { 
+                        image 'gradle'
+                            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                            }
+                    }
+            steps{
+           dir("./app"){
+              sh ' ./gradlew  test  '
+           }
+            }
 
-    //     }
+        }
         stage("SonarQube stage"){
              agent { dockerfile true }
             steps{
@@ -52,17 +52,21 @@ pipeline{
              withSonarQubeEnv('sq1') { 
              
               sh """ 
-             ./gradlew sonar \
-        -Dsonar.projectKey=hoss \
-        -Dsonar.host.url=http://ec2-3-128-28-74.us-east-2.compute.amazonaws.com:9000 \
-        -Dsonar.login=sqp_413051d5beff2f689d7f49702e0c66cb0fbd13eb
-                        """    
+                 ls
+                """    
                 }
+                
 
            }
             }
 
         }
+    stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
         // stage("Build stage"){
         //    agent {
         //       docker { 
