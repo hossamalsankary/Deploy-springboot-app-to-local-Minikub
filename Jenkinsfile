@@ -49,13 +49,17 @@ pipeline{
                     }
                }
             steps{
-                sh 'wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip'
-                sh 'unzip sonar-scanner-cli-4.7.0.2747-linux.zip'
-                sh 'export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/'
-                sh 'echo $PATH'
+        
+        sh """#!/bin/bash
+        wget  -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+            unzip sonar-scanner-cli-4.7.0.2747-linux.zip
+            sudo mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
+            export PATH="$PATH:/opt/sonar-scanner/bin"
+
+        """
+        
            dir("./app"){
 
-            
             //   withSonarQubeEnv(installationName: 'sq1') { 
              
             //         //     sh """
