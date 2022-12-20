@@ -45,7 +45,7 @@ pipeline{
          agent {
               docker { 
                    image 'gradle'
-                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+                   
                     }
                }
             steps{
