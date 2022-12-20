@@ -52,7 +52,7 @@ pipeline{
                 sh 'wget -q https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip'
                 sh 'unzip sonar-scanner-cli-4.7.0.2747-linux.zip'
                 sh 'export PATH=$PATH:$PWD/sonar-scanner-4.7.0.2747-linux/bin/'
-                sh 'sonar-scanner'
+                sh 'echo $PATH'
            dir("./app"){
 
             
