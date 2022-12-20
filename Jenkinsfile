@@ -44,7 +44,7 @@ pipeline{
         stage("SonarQube stage"){
          agent {
               docker { 
-                   image 'nginx'
+                   image 'gradle'
                    args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
 
                    
@@ -57,8 +57,8 @@ pipeline{
             unzip sonar-scanner-cli-4.7.0.2747-linux.zip
             sudo mv sonar-scanner-4.7.0.2747-linux /opt/sonar-scanner
             export PATH="$PATH:/opt/sonar-scanner/bin"
-
         """
+        sh 'sonar-scanner '
         
            dir("./app"){
 
