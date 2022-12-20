@@ -1,31 +1,39 @@
 pipeline{
     agent any
     stages{
-        // stage("Lint stage"){
-        //     steps{
-        //     dir("./app"){
-        //         sh ' ./gradlew  check '
-        //     }
+        stage("Lint stage"){
+              agent {
+                        docker { 
+                            image 'gradle'
+                             args '-v $HOME/.m2:/root/.m2'
+                             }
+                    }
+            steps{
+                sh 'pwd'
+                
+            dir("./app"){
+                sh ' ./gradlew  check '
+            }
                
-        //     }
+            }
 
-        // }
-        // stage("Unit test stage"){
-        //     steps{
-        //    dir("./app"){
-        //       sh ' ./gradlew  test  '
-        //    }
-        //     }
+        }
+        stage("Unit test stage"){
+            steps{
+           dir("./app"){
+              sh ' ./gradlew  test  '
+           }
+            }
 
-        // }
-        // stage("SonarQube stage"){
-        //     steps{
-        //    dir("./app"){
+        }
+        stage("SonarQube stage"){
+            steps{
+           dir("./app"){
 
-        //    }
-        //     }
+           }
+            }
 
-        // }
+        }
         stage("Build stage"){
             steps{
           dir("./app"){
