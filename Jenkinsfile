@@ -63,6 +63,7 @@ pipeline {
 
           withSonarQubeEnv("sonar-scan-server") {
           //  sh "./gradlew sonar"
+          
           }
 
         }
