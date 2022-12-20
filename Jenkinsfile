@@ -52,7 +52,7 @@ pipeline{
              withSonarQubeEnv('sq1') { 
              
               sh """ 
-               ./gradlew sonar 
+                ./gradlew tasks
              
                 """    
                 }
