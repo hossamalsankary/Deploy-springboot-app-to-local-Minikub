@@ -44,7 +44,7 @@ pipeline{
         stage("SonarQube stage"){
          agent {
               docker { 
-                   image 'gradle'
+                   image 'sonar-scanner-cli'
                     args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
                     }
                }
