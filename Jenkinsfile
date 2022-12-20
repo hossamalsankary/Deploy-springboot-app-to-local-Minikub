@@ -50,7 +50,7 @@ pipeline{
            dir("./app"){
 
              withSonarQubeEnv("sonar-scan-server") {
-                  sh "./gradlew sonar"
+                  sh "./gradlew sonarqube"
                  }
              
             //   sh """ 
