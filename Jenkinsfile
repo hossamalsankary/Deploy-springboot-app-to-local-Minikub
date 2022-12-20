@@ -51,7 +51,7 @@ pipeline{
             steps{
            dir("./app"){
                     withSonarQubeEnv(installationName: 'sq1') { 
-                          sh """   ./gradlew SonarScanner -Dsonar.projectKey=test '
+                          sh """  gradle sonar   -Dsonar.projectKey=test '
                            """
                 }
         //     sh """
