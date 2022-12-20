@@ -2,8 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.7-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-  id "org.sonarqube" version "3.5.0.2730"
-  
+ 	 id "org.sonarqube" version "3.5.0.2730"  
 
 
 
@@ -11,7 +10,7 @@ plugins {
 
 sonar {
   properties {
-    property "sonar.projectKey", "test"
+    property "sonar.projectKey", "hoss"
   }
 }
 
