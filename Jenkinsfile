@@ -45,14 +45,13 @@ pipeline{
          agent {
               docker { 
                    image 'gradle'
-
                    
                     }
                }
             steps{
         
            sh 'bash ./bash-scripts/sonarsceaaner.sh'
-        sh 'sonar-scanner '
+           sh 'sonar-scanner '
         
            dir("./app"){
 
