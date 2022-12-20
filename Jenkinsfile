@@ -52,7 +52,7 @@ pipeline{
            dir("./app"){
    
               withSonarQubeEnv(installationName: 'sq1') { 
-                        sh "./gradlew sonar "
+                        sh "./gradlew sonar --info "
                 }
            }
             }
