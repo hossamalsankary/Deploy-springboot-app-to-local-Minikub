@@ -42,16 +42,10 @@ pipeline{
 
         }
         stage("SonarQube stage"){
-         agent {
-              docker { 
-                   image 'gradle'
-                   
-                    }
-               }
+             agent { dockerfile true }
             steps{
         
-           sh 'bash ./bash-scripts/sonarsceaaner.sh'
-           sh 'sonar-scanner '
+           sh 'sonar-scanner --version'
         
            dir("./app"){
 
