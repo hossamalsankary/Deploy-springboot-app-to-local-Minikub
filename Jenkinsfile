@@ -1,6 +1,15 @@
 pipeline{
     agent any
+
     stages{
+        stage("shoow"){
+            steps{
+                sh "whoami"
+                sh "ls ~/"
+                sh  "ls /home"
+                
+            }
+        }
         stage("Lint stage"){
               agent {
                     docker { 
