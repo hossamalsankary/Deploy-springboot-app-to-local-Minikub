@@ -92,7 +92,6 @@ pipeline {
 
     }
 
-<<<<<<< HEAD
     stage("SonarQube stage") {
       agent {
         dockerfile true
@@ -120,9 +119,7 @@ pipeline {
         // }
       }
     }
-=======
 // Create a docker file to dockerize attached spring boot project
->>>>>>> main
     stage("Build springboot app Image") {
       steps {
         dir("./app") {
