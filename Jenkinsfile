@@ -5,7 +5,7 @@
 //  Deploy springboot app to local Minikub
 //  Dev deployment
 //  Prod deployment
-//  README file to explain the above
+//  README   file to explain the above
 def serverIP = '0000'
 pipeline {
   agent any
