@@ -188,7 +188,7 @@ pipeline {
       }
     }
     
-// Smake Test for dev
+// Smake Test for prod
     stage("Smoke Test on Prod"){
      when {
         branch 'Master'
@@ -209,8 +209,12 @@ pipeline {
 
     failure {
       sh 'docker system prune --volumes   --force  --all '
-    //   cleanWs()
+       cleanWs()
 
+    }
+    success{
+     sh 'docker system prune --volumes   --force  --all '
+       cleanWs()
     }
   }
 }

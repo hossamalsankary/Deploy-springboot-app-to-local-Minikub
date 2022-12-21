@@ -281,6 +281,42 @@
     }
 
 ```
+![plot](/images/10.png)
 
 
+## Smake Test for prod
+```diff 
+    stage("Smoke Test on Prod"){
+     when {
+        branch 'Master'
+      }
+      steps{
+        sh "curl ${serverIP}"
+      }
+      post{
+        failure{
+              sh ' kubectl rollout undo deployment/spring-deploy  -n prod'
+          }
+      }
+    }
+  }
 
+```
+![plot](/images/10.png)
+
+
+## rollback and clearn
+```diff 
+  post {
+
+    failure {
+      sh 'docker system prune --volumes   --force  --all '
+       cleanWs()
+
+    }
+    success{
+     sh 'docker system prune --volumes   --force  --all '
+       cleanWs()
+    }
+  }
+```
