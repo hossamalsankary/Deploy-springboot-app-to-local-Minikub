@@ -5,7 +5,9 @@ pipeline {
   stages {
 
 stage("SonarQubeScanner"){
- 
+    agent {
+        dockerfile true
+      }
   steps{
   withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
