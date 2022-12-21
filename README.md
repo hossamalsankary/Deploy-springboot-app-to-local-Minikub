@@ -20,7 +20,7 @@
         agent {
           docker {
             image 'gradle'
-            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches' 
             }
           }
             
@@ -32,3 +32,65 @@
     }
  ``` 
  
+## Unit test stage
+```diff 
+--    Unit test stage 
+
+    stage("Unit test stage") {
+      agent {
+        docker {
+          image 'gradle'
+          args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+        }
+      }
+      steps {
+        dir("./app") {
+          sh ' ./gradlew  test  '
+        }
+      }
+
+    }
+```
+![plot](/images/1.png)
+
+#### ---------------------------------------------------------------------------------------------------------
+##  SonarQube stage
+####  integrate SonarQube with Jenkins and  scan springboot app with SonarQubeScanner 
+
+```diff 
+--  SonarQube stage
+    stage("SonarQubeScanner"){
+        agent {
+            dockerfile true
+          }
+      steps{
+        withSonarQubeEnv(installationName: 'SonarQubeScanner') {
+           dir("./app"){
+               sh "echo SonarQubeScanner"
+
+              sh "./gradlew sonar \
+                -Dsonar.projectKey=${damo} \
+                -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+                -Dsonar.projectName=${damo} \
+                -Dsonar.projectVersion=${BUILD_NUMBER}"
+            }
+        }
+      }
+    }
+--  wait for the  SonarQube 
++ brack the pipline if SonarQube failed
+    stage("Quality Gate") {
+      steps {
+        sh "echo waitForQualityGate "
+        // timeout(time: 2, unit: 'MINUTES') {
+        // waitForQualityGate abortPipeline: true
+        // }
+      }
+    }
+```
+![plot](/images/2.png)
+![plot](/images/3.png)
+![plot](/images/4.png)
+
+
