@@ -1,7 +1,7 @@
 // Create a gitlab/github repo wiht the following;
 // Create a docker file to dockerize attached spring boot project
 // Create a Jenkins a multibranch pipeline that have the following
-//  Unit  test stage
+//  Unit test stage
 //  Deploy springboot app to local Minikub
 //  Dev deployment
 //  Prod deployment
