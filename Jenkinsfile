@@ -55,13 +55,13 @@ pipeline {
         withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
                 sh 'sleep 10'
-            //   sh "./gradlew sonar \
-            //     -Dsonar.projectKey=${damo} \
-            //     -Dsonar.host.url=${env.SONAR_HOST_URL} \
-            //     -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
-            //     -Dsonar.projectName=${damo} \
-            //     -Dsonar.projectVersion=${BUILD_NUMBER}"
-            // }
+              // sh "./gradlew sonar \
+              //   -Dsonar.projectKey=${damo} \
+              //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
+              //   -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+              //   -Dsonar.projectName=${damo} \
+              //   -Dsonar.projectVersion=${BUILD_NUMBER}"
+            }
         }
       }
     }
