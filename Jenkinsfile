@@ -17,8 +17,8 @@ stage("SonarQubeScanner"){
   //                 -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
   //                 -Dsonar.projectName=${damo} \
   //                 -Dsonar.projectVersion=${BUILD_NUMBER}"
-  //               }
-  // }
+                }
+                  }
 }
     
 
