@@ -113,6 +113,9 @@ pipeline {
 
 // Dev deployment
     stage("Dev deployment") {
+   when {
+        branch 'main'
+      }
       steps {
         sh """
           sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml

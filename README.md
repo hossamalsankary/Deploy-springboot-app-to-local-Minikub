@@ -198,6 +198,9 @@
 --  dev deployment 
 
     stage("Dev deployment") {
+    when {
+            branch 'main'
+        }
       steps {
         sh """
           sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
@@ -245,6 +248,39 @@
 ```
 ![plot](/images/10.png)
 
+## Prod deployment
+```diff
+    stage("Prod deployment") {
+-- on Master
+      when {
+        branch 'Master'
+      }
+      steps {
+        sh """
+        sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml 
+        """
+
+        dir("./k8s") {
+          sh ' kubectl apply -f . -n prod'
+        }
+     
+      }
+      post{
+         
+         success{
+          sh ' minikube service  spring-service  -n prod --url > tump.txt'
+            script {
+              serverIP = readFile('tump.txt').trim()
+            }
+          }
+          failure{
+             sh ' kubectl rollout undo deployment/spring-deploy -n prod '
+          }
+      }
+
+    }
+
+```
 
 
 
