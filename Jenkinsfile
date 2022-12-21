@@ -176,6 +176,7 @@ pipeline {
         branch 'main'
       }
       steps{
+        
         sh "curl ${serverIP}"
       }
       post{

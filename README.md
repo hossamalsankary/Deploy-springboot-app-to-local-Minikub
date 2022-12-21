@@ -10,3 +10,25 @@
 - [✔️] 🐧  8  => Dev deployment
 - [✔️] 🐧  9  => Prod deployment
 - [✔️] 🐧  10 => README file to explain the above
+
+## Lint stag 
+ #### Make use of docker container in jenkins Pipline that give jenkins more power and avoid and conflict
+ ```diff 
+-- Lint stage
+    stage("Lint stage"){
+      
+        agent {
+          docker {
+            image 'gradle'
+            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+            }
+          }
+            
+        steps{
+          dir("./app"){
+              sh ' ./gradlew  check '
+          }
+        }
+    }
+ ``` 
+ 
