@@ -11,7 +11,7 @@ stage("SonarQubeScanner"){
   steps{
   withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
-                 sh 'bash ./bash-scripts/runSonar.sh'
+                 sh 'bash ../bash-scripts/runSonar.sh'
                 }
   }
                   }
