@@ -12,106 +12,106 @@ pipeline {
 
   stages {
 
-// Lint stage
-//     stage("Lint stage"){
+//Lint stage
+    stage("Lint stage"){
       
-//         agent {
-//           docker {
-//             image 'gradle'
-//             args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-//             }
-//           }
+        agent {
+          docker {
+            image 'gradle'
+            args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+            }
+          }
             
-//         steps{
-//           dir("./app"){
-//               sh ' ./gradlew  check '
-//           }
-//         }
-//     }
+        steps{
+          dir("./app"){
+              sh ' ./gradlew  check '
+          }
+        }
+    }
 
-// // Unit test stage 
+// Unit test stage 
 
-//     stage("Unit test stage") {
-//       agent {
-//         docker {
-//           image 'gradle'
-//           args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-//         }
-//       }
-//       steps {
-//         dir("./app") {
-//           sh ' ./gradlew  test  '
-//         }
-//       }
+    stage("Unit test stage") {
+      agent {
+        docker {
+          image 'gradle'
+          args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+        }
+      }
+      steps {
+        dir("./app") {
+          sh ' ./gradlew  test  '
+        }
+      }
 
-//     }
+    }
 
-// // SonarQube stage
-//     stage("SonarQubeScanner"){
-//         agent {
-//             dockerfile true
-//           }
-//       steps{
-//         withSonarQubeEnv(installationName: 'SonarQubeScanner') {
-//            dir("./app"){
-//                 sh 'sleep 10'
-//               // sh "./gradlew sonar \
-//               //   -Dsonar.projectKey=${damo} \
-//               //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
-//               //   -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
-//               //   -Dsonar.projectName=${damo} \
-//               //   -Dsonar.projectVersion=${BUILD_NUMBER}"
-//             }
-//         }
-//       }
-//     }
+// SonarQube stage
+    stage("SonarQubeScanner"){
+        agent {
+            dockerfile true
+          }
+      steps{
+        withSonarQubeEnv(installationName: 'SonarQubeScanner') {
+           dir("./app"){
+                sh 'sleep 10'
+              // sh "./gradlew sonar \
+              //   -Dsonar.projectKey=${damo} \
+              //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
+              //   -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+              //   -Dsonar.projectName=${damo} \
+              //   -Dsonar.projectVersion=${BUILD_NUMBER}"
+            }
+        }
+      }
+    }
 
-// // wait for the  SonarQube 
-//     stage("Quality Gate") {
-//       steps {
-//         sh 'sleep 2'
-//         // timeout(time: 2, unit: 'MINUTES') {
-//         // waitForQualityGate abortPipeline: true
-//         // }
-//       }
-//     }
+// wait for the  SonarQube 
+    stage("Quality Gate") {
+      steps {
+        sh 'sleep 2'
+        // timeout(time: 2, unit: 'MINUTES') {
+        // waitForQualityGate abortPipeline: true
+        // }
+      }
+    }
 
-// // Build stage
-//    stage("Build stage") {
-//       agent {
-//         docker {
-//           image 'gradle'
-//           args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
-//         }
-//       }
-//       steps {
-//         dir("./app") {
-//           sh ' ./gradlew  build  '
-//         }
-//       }
+// Build stage
+   stage("Build stage") {
+      agent {
+        docker {
+          image 'gradle'
+          args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+        }
+      }
+      steps {
+        dir("./app") {
+          sh ' ./gradlew  build  '
+        }
+      }
 
-//     }
+    }
 
-// // Create a docker file to dockerize attached spring boot project
-//     stage("Build springboot app Image") {
-//       steps {
-//         dir("./app") {
-//           // used gradle image to build our project
-//           sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
-//           sh ' minikube image build -t  spring-app .'
-//         }
-//       }
-//     }
+// Create a docker file to dockerize attached spring boot project
+    stage("Build springboot app Image") {
+      steps {
+        dir("./app") {
+          // used gradle image to build our project
+          sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
+          sh ' minikube image build -t  spring-app .'
+        }
+      }
+    }
 
-// // Deploy springboot app to local Minikub
-//     stage("Carete Name Spaces") {
-//       steps {
+// Deploy springboot app to local Minikub
+    stage("Carete Name Spaces") {
+      steps {
 
-//         sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
-//       }
-//     }
+        sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
+      }
+    }
 
-// // Dev deployment
+// Dev deployment
     stage("Dev deployment") {
       steps {
         sh """
@@ -191,7 +191,7 @@ pipeline {
         branch 'Master'
       }
       steps{
-        sh 'curl ${serverIP}'
+        sh "curl ${serverIP}"
       }
       post{
         failure{
