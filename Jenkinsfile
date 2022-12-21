@@ -54,7 +54,6 @@ pipeline {
       steps{
         withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
-                sh 'sleep 10'
               // sh "./gradlew sonar \
               //   -Dsonar.projectKey=${damo} \
               //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
@@ -69,7 +68,6 @@ pipeline {
 // wait for the  SonarQube 
     stage("Quality Gate") {
       steps {
-        sh 'sleep 2'
         // timeout(time: 2, unit: 'MINUTES') {
         // waitForQualityGate abortPipeline: true
         // }
@@ -92,33 +90,6 @@ pipeline {
 
     }
 
-    stage("SonarQube stage") {
-      agent {
-        dockerfile true
-      }
-      steps {
-
-        sh 'sonar-scanner --version'
-
-        dir("./app") {
-
-          withSonarQubeEnv("sonar-scan-server") {
-            //  sh "./gradlew sonar"
-         
-          }
-
-        }
-      }
-
-    }
-    stage("Quality Gate") {
-      steps {
-        sh 'sleep 2'
-        // timeout(time: 2, unit: 'MINUTES') {
-        // waitForQualityGate abortPipeline: true
-        // }
-      }
-    }
 // Create a docker file to dockerize attached spring boot project
     stage("Build springboot app Image") {
       steps {
@@ -174,7 +145,6 @@ pipeline {
       steps {
         sh """
         sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml 
-
         """
 
         dir("./app") {
