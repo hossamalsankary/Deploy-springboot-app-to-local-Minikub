@@ -150,7 +150,7 @@ pipeline {
         sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml 
         """
 
-        dir("./app") {
+        dir("./k8s") {
           sh ' kubectl apply -f . -n prod'
         }
      
