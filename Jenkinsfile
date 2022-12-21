@@ -194,6 +194,7 @@ pipeline {
         branch 'Master'
       }
       steps{
+        sh 'sleep 30'
         sh "curl ${serverIP}"
       }
       post{
