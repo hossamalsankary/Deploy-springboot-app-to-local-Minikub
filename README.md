@@ -11,6 +11,8 @@
 - [✔️] 🐧  9  => Prod deployment
 - [✔️] 🐧  10 => README file to explain the above
 
+
+
 ## Lint stag 
  #### Make use of docker container in jenkins Pipline that give jenkins more power and avoid and conflict
  ```diff 
@@ -321,4 +323,4 @@
     }
   }
 ```
-![plot](/images/120.png)
+![plot](/images/30.png)
