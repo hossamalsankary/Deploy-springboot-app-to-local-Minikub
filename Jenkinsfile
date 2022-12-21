@@ -112,31 +112,31 @@ pipeline {
 //     }
 
 // // Dev deployment
-//     stage("Dev deployment") {
-//       steps {
-//         sh """
-//           sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
-//          """ 
-//         dir("./k8s") {
-//           sh ' kubectl apply -f . -n dev'
-//         }
+    stage("Dev deployment") {
+      steps {
+        sh """
+          sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+         """ 
+        dir("./k8s") {
+          sh ' kubectl apply -f . -n dev'
+        }
 
 
-//       }
-//       post{
-//          success{
+      }
+      post{
+         success{
 
-//             sh ' minikube service  spring-service  -n dev --url > tump.txt'
-//             script {
-//               serverIP = readFile('tump.txt').trim()
-//             }
-//           }
-//           failure{
+            sh ' minikube service  spring-service  -n dev --url > tump.txt'
+            script {
+              serverIP = readFile('tump.txt').trim()
+            }
+          }
+          failure{
 
-//              sh ' kubectl rollout undo deployment/spring-deploy  -n dev'
-//           }
-//       }   
-//     }
+             sh ' kubectl rollout undo deployment/spring-deploy  -n dev'
+          }
+      }   
+    }
 
 // Prod deployment
     stage("Prod deployment") {
