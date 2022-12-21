@@ -10,7 +10,8 @@ stage("SonarQubeScanner"){
       }
   steps{
   withSonarQubeEnv(installationName: 'SonarQubeScanner', credentialsId: 'SonarQubeSecret') {
-                sh "./gradlew sonar:sonar \
+               sh ' ${env.SONAR_HOST_URL} , ${env.SONAR_AUTH_TOKEN} '
+                sh "./gradlew sonar \
                   -Dsonar.projectKey=${damo} \
                   -Dsonar.host.url=${env.SONAR_HOST_URL} \
                   -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
