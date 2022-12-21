@@ -5,6 +5,9 @@ pipeline {
   stages {
 
 stage("SonarQubeScanner"){
+    agent {
+        dockerfile true
+      }
   steps{
   withSonarQubeEnv(installationName: 'SonarQubeScanner', credentialsId: 'SonarQubeSecret') {
                 sh "./gradlew sonar \
