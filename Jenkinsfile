@@ -115,7 +115,7 @@ pipeline {
     stage("Dev deployment") {
       steps {
         sh """
-          sed -i 's|TEMP|spring-app|g'./k8s/springBootDeploy.yaml
+          sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
          """ 
         dir("./k8s") {
           sh ' kubectl apply -f . -n dev'
@@ -146,7 +146,8 @@ pipeline {
       }
       steps {
         sh """
-        sed  -i 's|TEMP|spring-app|g'./k8s/springBootDeploy.yaml 
+        sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml 
+
         """
 
         dir("./app") {
