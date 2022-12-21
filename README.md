@@ -291,6 +291,7 @@
         branch 'Master'
       }
       steps{
+        
         sh "curl ${serverIP}"
       }
       post{
@@ -320,3 +321,4 @@
     }
   }
 ```
+![plot](/images/120.png)
