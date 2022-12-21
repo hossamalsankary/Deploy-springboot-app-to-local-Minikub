@@ -31,7 +31,9 @@
         }
     }
  ``` 
- 
+ ![plot](/images/0.png)
+
+
 ## Unit test stage
 ```diff 
 --    Unit test stage 
@@ -93,4 +95,22 @@
 ![plot](/images/3.png)
 ![plot](/images/4.png)
 
+#### Build stage
 
+```diff
+--  Build stage
+   stage("Build stage") {
+      agent {
+        docker {
+          image 'gradle'
+          args '-v $HOME/.gradle/caches:$HOME/.gradle/caches'
+        }
+      }
+      steps {
+        dir("./app") {
+          sh ' ./gradlew  build  '
+        }
+      }
+
+    }
+ ```
