@@ -114,3 +114,116 @@
 
     }
  ```
+![plot](/images/5.png)
+
+## Create a docker file to dockerize attached spring boot project
+
+```diff 
+-- because-of we don't have and version of gradle install on jenkins server
+-- we make used of mount volume in docker to build the code of fly
+    stage("Build springboot app Image") {
+      steps {
+        dir("./app") { 
+          sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
+          sh ' minikube image build -t  spring-app .'
+        }
+      }
+    }
+-- Docker file ------------------------------------
+    FROM openjdk:17-jdk-alpine
+
+    WORKDIR /var/server
+
+    RUN addgroup -S webserver && adduser -S  webserver -G webserver
+
+    USER webserver:webserver
+
+    EXPOSE 8080
+
+    ARG JAR_FILE=build/libs/demo-0.0.1-SNAPSHOT.jar
+
+    COPY ${JAR_FILE} /var/server/app.jar
+
+    ENTRYPOINT ["java","-jar","/var/server/app.jar"]   
+
+-- ---------------------------------------------------     
+
+```
+![plot](/images/6.png)
+![plot](/images/7.png)
+
+## Deploy springboot app to local Minikub
+```diff 
+-- we need to check for the namespace first
+    stage("Carete Name Spaces") {
+      steps {
+
+        sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
+      }
+    }
+--  cheackForNameSpaces script -----------------------
+    #! /bin/bash
+
+    namespaces=$(kubectl get namespaces)
+
+
+
+    if [[ $namespaces = *dev* ]]
+    then
+
+    echo "Dev  exist "
+
+    else
+    echo  " create namespace Dev deployment "
+    kubectl create namespace  dev
+
+    fi 
+
+
+    if [[ $namespaces = *prod* ]]
+    then
+
+    echo "Prod exist "
+
+    else 
+    echo  " create namespace Prod "
+    kubectl create namespace  prod
+
+    fi 
+
+```
+
+## Dev deployment
+```diff
+--  dev deployment 
+
+    stage("Dev deployment") {
+      steps {
+        sh """
+          sed -i 's|TEMP|spring-app|g' ./k8s/springBootDeploy.yaml
+         """ 
+        dir("./k8s") {
+          sh ' kubectl apply -f . -n dev'
+        }
+
+
+      }
+      post{
+         success{
+
+            sh ' minikube service  spring-service  -n dev --url > tump.txt'
+            script {
+--            save the servire ip
+              serverIP = readFile('tump.txt').trim()
+            }
+          }
+          failure{
+--  rollout on failure
+             sh ' kubectl rollout undo deployment/spring-deploy  -n dev'
+          }
+      }   
+    }
+```
+![plot](/images/7.png)
+
+

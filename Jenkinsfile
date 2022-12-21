@@ -97,7 +97,6 @@ pipeline {
     stage("Build springboot app Image") {
       steps {
         dir("./app") {
-          // used gradle image to build our project
           sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
           sh ' minikube image build -t  spring-app .'
         }
