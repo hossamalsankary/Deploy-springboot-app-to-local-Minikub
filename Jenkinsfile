@@ -1,20 +1,18 @@
 // Create a gitlab/github repo wiht the following;
 // Create a docker file to dockerize attached spring boot project
-
-Create a Jenkins a multibranch pipeline that have the following
-
- Unit test stage
- Deploy springboot app to local Minikub
- Dev deployment
- Prod deployment
-A README file to explain the above
+// Create a Jenkins a multibranch pipeline that have the following
+//  Unit test stage
+//  Deploy springboot app to local Minikub
+//  Dev deployment
+//  Prod deployment
+//  README file to explain the above
 def serverIP = '0000'
 pipeline {
   agent any
 
   stages {
 
-//  Lint stage
+// Lint stage
     stage("Lint stage"){
       
         agent {
@@ -48,8 +46,7 @@ pipeline {
 
     }
 
-//    SonarQube stage
-
+// SonarQube stage
     stage("SonarQubeScanner"){
         agent {
             dockerfile true
@@ -68,6 +65,7 @@ pipeline {
         }
       }
     }
+
 // wait for the  SonarQube 
     stage("Quality Gate") {
       steps {
@@ -78,7 +76,7 @@ pipeline {
       }
     }
 
-//  Build stage
+// Build stage
    stage("Build stage") {
       agent {
         docker {
@@ -112,6 +110,7 @@ pipeline {
         sh 'bash ./bash-scripts/cheackForNameSpaces.sh'
       }
     }
+
 // Dev deployment
     stage("Dev deployment") {
       steps {
@@ -184,6 +183,7 @@ pipeline {
           }
       }
     }
+    
 // Smake Test for dev
     stage("Smoke Test on Prod"){
      when {
