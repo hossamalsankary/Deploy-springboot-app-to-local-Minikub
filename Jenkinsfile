@@ -54,8 +54,8 @@ pipeline {
       steps{
         withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
-               sh "echo SonarQubeScanner"
-
+               sh "echo SonarQubeScanner c"
+ 
               sh "./gradlew sonar \
                 -Dsonar.projectKey=${damo} \
                 -Dsonar.host.url=${env.SONAR_HOST_URL} \
