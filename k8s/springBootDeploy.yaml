@@ -18,15 +18,16 @@ spec:
         imagePullPolicy: Never
         ports:
         - containerPort: 8080
-    readinessProbe:
-      httpGet:
-        path: /
-        port: 8080
-      initialDelaySeconds: 5
-      periodSeconds: 10
-    livenessProbe:
-      httpGet:
-        path: /
-        port: 8080
-      periodSeconds: 1
-      initialDelaySeconds: 80
+        
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          periodSeconds: 1
+          initialDelaySeconds: 80
