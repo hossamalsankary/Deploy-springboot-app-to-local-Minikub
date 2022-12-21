@@ -11,12 +11,13 @@ stage("SonarQubeScanner"){
   steps{
   withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
-                sh "./gradlew org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar \
-                  -Dsonar.projectKey=${damo} \
-                  -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                  -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
-                  -Dsonar.projectName=${damo} \
-                  -Dsonar.projectVersion=${BUILD_NUMBER}"
+            sh 'hh'
+                // sh "./gradlew org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar \
+                //   -Dsonar.projectKey=${damo} \
+                //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                //   -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+                //   -Dsonar.projectName=${damo} \
+                //   -Dsonar.projectVersion=${BUILD_NUMBER}"
                 }
   }
                   }
