@@ -1,8 +1,22 @@
 def serverIP = '0000'
 pipeline {
   agent any
- 
+
   stages {
+
+stage("SonarQubeScanner"){
+  steps{
+  withSonarQubeEnv(installationName: 'SonarQubeScanner', credentialsId: 'SonarQubeSecret') {
+                sh "./gradlew sonar \
+                  -Dsonar.projectKey=${damo} \
+                  -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                  -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+                  -Dsonar.projectName=${damo} \
+                  -Dsonar.projectVersion=${BUILD_NUMBER}"
+                }
+  }
+}
+    
 
     stage("Lint stage"){
         agent {
@@ -62,8 +76,8 @@ pipeline {
         dir("./app") {
 
           withSonarQubeEnv("sonar-scan-server") {
-          //  sh "./gradlew sonar"
-          
+            //  sh "./gradlew sonar"
+         
           }
 
         }
@@ -72,6 +86,7 @@ pipeline {
     }
     stage("Quality Gate") {
       steps {
+        sh 'sleep 2'
         // timeout(time: 2, unit: 'MINUTES') {
         // waitForQualityGate abortPipeline: true
         // }
@@ -80,6 +95,7 @@ pipeline {
     stage("Build springboot app Image") {
       steps {
         dir("./app") {
+          // used gradle image to build onflay
           sh 'docker run  -v "${PWD}":/home/gradle  gradle  ./gradlew build'
           sh ' minikube image build -t  spring-app .'
         }
@@ -97,7 +113,7 @@ pipeline {
       steps {
 
         sh """
-          sed - i 's|TEMP|spring-app|g'. / k8s / springBootDeploy.yaml
+          sed -i 's|TEMP|spring-app|g'. / k8s / springBootDeploy.yaml
          """ 
         dir("./k8s") {
           sh ' kubectl apply -f . -n dev'
@@ -130,7 +146,7 @@ pipeline {
       }
       steps {
         sh """
-        sed - i 's|TEMP|spring-app|g'. / k8s / springBootDeploy.yaml 
+        sed  -i 's|TEMP|spring-app|g'. / k8s / springBootDeploy.yaml 
         """
 
         dir("./app") {
@@ -151,6 +167,12 @@ pipeline {
           }
       }
 
+    }
+
+    stage("Smoke Test"){
+      steps{
+        sh 'curl ${serverIP}'
+      }
     }
   }
   post {
