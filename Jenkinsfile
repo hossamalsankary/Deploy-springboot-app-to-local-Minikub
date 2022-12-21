@@ -54,7 +54,6 @@ pipeline {
       steps{
         withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
-                sh 'sleep 10'
               // sh "./gradlew sonar \
               //   -Dsonar.projectKey=${damo} \
               //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
@@ -69,7 +68,6 @@ pipeline {
 // wait for the  SonarQube 
     stage("Quality Gate") {
       steps {
-        sh 'sleep 2'
         // timeout(time: 2, unit: 'MINUTES') {
         // waitForQualityGate abortPipeline: true
         // }
