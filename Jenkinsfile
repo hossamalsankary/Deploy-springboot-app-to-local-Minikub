@@ -56,12 +56,12 @@ pipeline {
            dir("./app"){
                sh "echo SonarQubeScanner"
 
-              sh "./gradlew sonar \
-                -Dsonar.projectKey=${damo} \
-                -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
-                -Dsonar.projectName=${damo} \
-                -Dsonar.projectVersion=${BUILD_NUMBER}"
+              // sh "./gradlew sonar \
+              //   -Dsonar.projectKey=${damo} \
+              //   -Dsonar.host.url=${env.SONAR_HOST_URL} \
+              //   -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+              //   -Dsonar.projectName=${damo} \
+              //   -Dsonar.projectVersion=${BUILD_NUMBER}"
             }
         }
       }
