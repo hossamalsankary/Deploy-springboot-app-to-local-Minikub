@@ -55,7 +55,7 @@ spec:
           initialDelaySeconds: 80
 ```
 
-## Lint stag 
+## Lint stage
  #### Make use of docker container in jenkins Pipline that give jenkins more power and avoid and conflict
  ```diff 
 -- Lint stage
