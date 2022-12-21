@@ -224,6 +224,27 @@
       }   
     }
 ```
-![plot](/images/7.png)
+![plot](/images/9.png)
+## Smake Test for dev
+```diff
+-- Smoke Test on Dev
+    stage("Smoke Test on Dev"){
+     when {
+        branch 'main'
+      }
+      steps{
+        
+        sh "curl ${serverIP}"
+      }
+      post{
+        failure{
+              sh ' kubectl rollout undo deployment/spring-deploy  -n dev'
+          }
+      }
+    }
+```
+![plot](/images/10.png)
+
+
 
 
