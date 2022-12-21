@@ -5,7 +5,7 @@
 //  Deploy springboot app to local Minikub
 //  Dev deployment
 //  Prod deployment
-//  README file to explain the above
+//  README   file to explain the above
 def serverIP = '0000'
 pipeline {
   agent any
@@ -54,8 +54,8 @@ pipeline {
       steps{
         withSonarQubeEnv(installationName: 'SonarQubeScanner') {
            dir("./app"){
-               sh "echo SonarQubeScanner"
-
+               sh "echo SonarQubeScanner c"
+ 
               sh "./gradlew sonar \
                 -Dsonar.projectKey=${damo} \
                 -Dsonar.host.url=${env.SONAR_HOST_URL} \
