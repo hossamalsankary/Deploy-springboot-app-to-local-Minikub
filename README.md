@@ -195,7 +195,7 @@ spec:
 ```
 ![plot](/images/6.png)
 ![plot](/images/7.png)
-
+![plot](/images/101010.png)
 ## Deploy springboot app to local Minikub
 ```diff 
 -- we need to check for the namespace first
