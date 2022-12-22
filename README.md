@@ -328,7 +328,7 @@ spec:
 ![plot](/images/10.png)
 
 
-## Smake Test for prod
+## Smoke Test for prod
 ```diff 
     stage("Smoke Test on Prod"){
      when {
@@ -350,7 +350,7 @@ spec:
 ![plot](/images/55.png)
 
 
-## rollback and clearn
+## rollback and clean
 ```diff 
   post {
 
