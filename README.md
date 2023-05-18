@@ -1,4 +1,4 @@
-# Task desecration
+# Task description
 
 - [✔️] 🐧  1  => Create a gitlab/github repo
 - [✔️] 🐧  2  => Create a Jenkins a multibranch pipeline
