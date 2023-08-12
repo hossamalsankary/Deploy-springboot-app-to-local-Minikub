@@ -2,7 +2,7 @@ version: '3.7'
 services:
   jenkins:
    # build: .
-    image: docker.io/jenkins/jenkins:latest 
+    image: hossamalsankary/jenkins:latest 
     privileged: true
     restart: always
     user: root
